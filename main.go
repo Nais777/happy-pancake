@@ -9,8 +9,12 @@ func main() {
 	}
 
 	for i, c := range cases {
-		flips := getFlipCount(c)
+		flipCount := c.grpCount
 
-		fmt.Printf("Case #%d: %d\n", i, flips)
+		if !c.lastUpDown {
+			flipCount--
+		}
+
+		fmt.Printf("Case #%d: %d\n", i, flipCount)
 	}
 }

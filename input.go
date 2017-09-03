@@ -11,14 +11,19 @@ func init() {
 	caseRegex = regexp.MustCompile(`[^\-\+]`)
 }
 
-func getCases() [][]bool {
+type caseDef struct {
+	grpCount   int
+	lastUpDown bool
+}
+
+func getCases() []*caseDef {
 	var caseCount int
 	if _, err := fmt.Scanf("%d", &caseCount); err != nil {
 		fmt.Println(err.Error())
 		return nil
 	}
 
-	cases := make([][]bool, caseCount, caseCount)
+	cases := make([]*caseDef, caseCount, caseCount)
 
 	var line string
 	for i := 0; i < caseCount; i++ {
@@ -30,7 +35,8 @@ func getCases() [][]bool {
 			return nil
 		}
 
-		cases[i] = makeGroupedSlice(line)
+		c, upDown := getGroupCount(line)
+		cases[i] = &caseDef{grpCount: c, lastUpDown: upDown}
 	}
 
 	return cases
@@ -46,8 +52,9 @@ func isUp(c rune) bool {
 	return c == '+'
 }
 
-func makeGroupedSlice(caseString string) []bool {
-	ret := make([]bool, 0, len(caseString))
+func getGroupCount(caseString string) (grpCount int, lastUpDown bool) {
+	lastUpDown = !isUp(rune(caseString[len(caseString)-1]))
+	grpCount = 1
 
 	prior := isUp(rune(caseString[0]))
 	for _, c := range caseString[1:] {
@@ -57,9 +64,9 @@ func makeGroupedSlice(caseString string) []bool {
 			continue
 		}
 
-		ret = append(ret, prior)
+		grpCount++
 		prior = up
 	}
 
-	return append(ret, prior)
+	return
 }

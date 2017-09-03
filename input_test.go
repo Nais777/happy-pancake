@@ -5,18 +5,20 @@ import "github.com/stretchr/testify/assert"
 
 func TestMakeGroupedSlice(t *testing.T) {
 	tab := []struct {
-		in  string
-		out []bool
+		in                string
+		outCount          int
+		outLastUpsideDown bool
 	}{
-		{in: "-", out: []bool{false}},
-		{in: "+", out: []bool{true}},
-		{in: "-+", out: []bool{false, true}},
-		{in: "+++", out: []bool{true}},
-		{in: "-+----+---++++-", out: []bool{false, true, false, true, false, true, false}},
+		{in: "-", outCount: 1, outLastUpsideDown: true},
+		{in: "+", outCount: 1, outLastUpsideDown: false},
+		{in: "-+", outCount: 2, outLastUpsideDown: false},
+		{in: "+++", outCount: 1, outLastUpsideDown: false},
+		{in: "-+----+---++++-", outCount: 7, outLastUpsideDown: true},
 	}
 
 	for _, tc := range tab {
-		out := makeGroupedSlice(tc.in)
-		assert.Equal(t, tc.out, out)
+		grpCount, upDown := getGroupCount(tc.in)
+		assert.Equal(t, tc.outCount, grpCount)
+		assert.Equal(t, tc.outLastUpsideDown, upDown)
 	}
 }
