@@ -2,14 +2,7 @@ package main
 
 import (
 	"fmt"
-	"regexp"
 )
-
-var caseRegex *regexp.Regexp
-
-func init() {
-	caseRegex = regexp.MustCompile(`[^\-\+]`)
-}
 
 func getCaseStrings() []string {
 	var caseCount int

@@ -1,6 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+)
+
+var caseRegex *regexp.Regexp
+
+func init() {
+	caseRegex = regexp.MustCompile(`[^\-\+]`)
+}
 
 func main() {
 	cases := getCaseStrings()
