@@ -33,24 +33,18 @@ func validCaseString(caseString string) bool {
 		!caseRegex.MatchString(caseString)
 }
 
-func isUp(c rune) bool {
-	return c == '+'
-}
-
-func getGroupCount(caseString string) (grpCount int, lastUpDown bool) {
-	lastUpDown = !isUp(rune(caseString[len(caseString)-1]))
+func getGroupCount(caseString string) (grpCount int, lastUpsideDown bool) {
+	lastUpsideDown = caseString[len(caseString)-1] == '-'
 	grpCount = 1
 
-	prior := isUp(rune(caseString[0]))
+	prior := rune(caseString[0])
 	for _, c := range caseString[1:] {
-		up := isUp(c)
-
-		if up == prior {
+		if c == prior {
 			continue
 		}
 
 		grpCount++
-		prior = up
+		prior = c
 	}
 
 	return

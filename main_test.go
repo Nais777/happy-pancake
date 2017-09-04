@@ -3,7 +3,7 @@ package main
 import "testing"
 import "github.com/stretchr/testify/assert"
 
-func TestMakeGroupedSlice(t *testing.T) {
+func TestGetGroupCount(t *testing.T) {
 	tab := []struct {
 		in                string
 		outCount          int
