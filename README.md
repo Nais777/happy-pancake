@@ -44,5 +44,3 @@ Every character in S is either + or ­.
 
 1 ≤ length of S ≤ 100.
 ```
-
-For convience, a dockerfile is also included. The dockerfile will build the application in the container as opposed to using the `ADD` command to include a built binary.
